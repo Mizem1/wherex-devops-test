@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-import psutil
+from utils import system_metrics, format
 
 app = Flask(__name__)
 
@@ -9,23 +9,14 @@ def get_metrics():
     Ruta que devuelve las métricas del sistema en formato JSON.
     """
     try:
-        cpu_usage = psutil.cpu_percent(interval=1) 
-
-        ram_info = psutil.virtual_memory()
-        ram_total_mb = ram_info.total / (1024 ** 2)
-        ram_used_mb = ram_info.used / (1024 ** 2)    
-        ram_available_mb = ram_info.available / (1024 ** 2)  
-
+        cpu_usage = system_metrics.get_cpu_usage()
+        ram_info = system_metrics.get_ram_info()
 
         metrics = {
             "status": "success",
             "data": {
-                "cpu_usage_percent": round(cpu_usage, 2),
-                "memory": {
-                    "total_mb": round(ram_total_mb, 2),
-                    "used_mb": round(ram_used_mb, 2),
-                    "available_mb": round(ram_available_mb, 2)
-                }
+                "cpu_usage_percent": format.format_cpu_usage(cpu_usage),
+                "memory": format.format_ram_info(ram_info),
             },
         }
         return jsonify(metrics)
