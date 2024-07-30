@@ -39,5 +39,4 @@ jobs:
       run: sleep 10
 
     - name: Verify deployment
-      run: |
-        curl -f http://localhost:5000/metrics
+      run: curl -f http://localhost:5000/metrics
