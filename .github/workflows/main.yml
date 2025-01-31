@@ -23,7 +23,7 @@ jobs:
         python-version: '3.11'
 
     - name: Install dependencies
-      run: pip install -r requirements.txt unittest bandit
+      run: pip install -r requirements.txt bandit
 
     - name: Pylint check
       run: |
