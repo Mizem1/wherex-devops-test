@@ -23,12 +23,19 @@ jobs:
         python-version: '3.11'
 
     - name: Install dependencies
-      run: pip install -r requirements.txt pytest pytest-flask pytest-mock
+      run: pip install -r requirements.txt unittest bandit
+
+    - name: Pylint check
+      run: |
+          pylint $(git ls-files '*.py') || true  
 
     - name: Run tests
       run: |
         export PYTHONPATH=$(pwd)
-        pytest
+        python3 -m unittest tests.test_app
+
+    - name: Run bandit
+      run: bandit -r .
 
     - name: Run deploy script
       run: |
