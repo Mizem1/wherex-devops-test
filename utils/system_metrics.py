@@ -1,11 +1,15 @@
+"""
+This module contains functions to retrieve system metrics such as CPU usage
+and RAM information using the psutil library.
+"""
 import psutil
 
 def get_cpu_usage():
-    """Obtiene el uso de la CPU."""
+    """Gets the CPU usage."""
     return psutil.cpu_percent(interval=1)
 
 def get_ram_info():
-    """Obtiene la información de la memoria RAM."""
+    """Gets the RAM information."""
     ram_info = psutil.virtual_memory()
     return {
         "total_gb": ram_info.total / (1024 ** 3),

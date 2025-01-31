@@ -1,12 +1,16 @@
+"""
+This module contains the Flask application and routes for retrieving
+system metrics such as CPU usage and RAM information.
+"""
 from flask import Flask, jsonify
-from utils import system_metrics, format
+from utils import system_metrics, format as format_utils
 
 app = Flask(__name__)
 
 @app.route("/metrics", methods=["GET"])
 def get_metrics():
     """
-    Ruta que devuelve las métricas del sistema en formato JSON.
+    Route that returns system metrics in JSON format.
     """
     try:
         cpu_usage = system_metrics.get_cpu_usage()
@@ -15,8 +19,8 @@ def get_metrics():
         metrics = {
             "status": "success",
             "data": {
-                "cpu_usage_percent": format.format_cpu_usage(cpu_usage),
-                "memory": format.format_ram_info(ram_info),
+                "cpu_usage_percent": format_utils.format_cpu_usage(cpu_usage),
+                "memory": format_utils.format_ram_info(ram_info),
             },
         }
         return jsonify(metrics)
